@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You're Invited! 🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #fff7f1;
+      --ink: #1f2a37;
+      --muted: #5b6b82;
+      --accent: #ff7ac2;
+      --accent-2: #6ee7ff;
+      --card: #ffffffee;
+      --ring: #ffd166;
+      --shadow: 0 10px 30px rgba(0,0,0,.10);
+    }
+    /* Alternate colorway: add class="theme-sky" to <body> */
+    body.theme-sky{
+      --bg:#eef9ff; --ink:#102335; --muted:#34506a; --accent:#56c5ff; --accent-2:#b29cff; --card:#ffffffee; --ring:#7cffc7;
+    }
+    /* Alternate colorway: add class="theme-blush" to <body> */
+    body.theme-blush{
+      --bg:#fff3f9; --ink:#321628; --muted:#6b4b5f; --accent:#ff6b9e; --accent-2:#ffd1a1; --card:#ffffffee; --ring:#ffb3d9;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; font-family: 'Quicksand', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink); background:
+        radial-gradient(1200px 800px at 10% -10%, var(--accent)/.2, transparent 60%),
+        radial-gradient(900px 600px at 110% 20%, var(--accent-2)/.25, transparent 60%),
+        var(--bg);
+      display:grid; place-items:center;
+      padding: 24px;
+    }
+
+    .invite{
+      width:min(720px, 92vw); aspect-ratio: 3/2; background:var(--card);
+      border-radius: 28px; box-shadow: var(--shadow);
+      position:relative; overflow:hidden; isolation:isolate; border: 2px solid rgba(0,0,0,.06);
+    }
+    /* Soft gradient frame */
+    .invite::before{
+      content:""; position:absolute; inset:-2px; border-radius: 30px;
+      padding:2px; background: linear-gradient(135deg, var(--accent), var(--ring), var(--accent-2));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      z-index:-1;
+    }
+
+    .confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+    .confetti span{
+      position:absolute; width:10px; height:18px; border-radius:2px;
+      background: var(--accent); transform: translateY(-120%);
+      animation: fall linear infinite; opacity:.9;
+    }
+    .confetti span:nth-child(3n){ background: var(--ring); }
+    .confetti span:nth-child(4n){ background: var(--accent-2); }
+    .confetti span:nth-child(5n){ background: #ffdede; }
+    @keyframes fall{
+      to{ transform: translateY(140%); }
+    }
+
+    .content{ height:100%; display:grid; grid-template-rows: auto 1fr auto; padding: 28px; gap: 16px; }
+
+    header{ display:flex; align-items:center; gap:14px; }
+    .tag{
+      font-size: .85rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      padding: 6px 10px; background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color:#fff; border-radius: 999px; box-shadow: 0 6px 15px rgba(0,0,0,.12);
+    }
+
+    h1{ font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.8vw, 3.2rem); line-height:1.05; margin:0; }
+    .sub{ color:var(--muted); margin-top:2px; }
+
+    .details{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items:center;
+    }
+
+    .card{
+      background:#fff; border-radius: 22px; padding: 18px 18px; box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .card h2{ font-size:1.05rem; letter-spacing:.08em; text-transform:uppercase; margin:0 0 10px; color:var(--muted); }
+    .big{ font-size: clamp(1.1rem, 2.9vw, 1.5rem); font-weight:700; }
+
+    .whenwhere{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .row{ display:flex; gap:10px; align-items:flex-start; }
+    .dot{ width:10px; height:10px; border-radius:50%; background:var(--accent); margin-top:6px; box-shadow:0 0 0 4px color-mix(in oklab, var(--accent) 25%, transparent); }
+
+    footer{ display:flex; justify-content:space-between; align-items:center; gap:14px; }
+    .rsvp{ display:flex; align-items:center; gap:10px; }
+    .btn{
+      border:none; padding:10px 16px; font-weight:700; border-radius:12px; cursor:pointer;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:white;
+      box-shadow: var(--shadow); text-decoration:none;
+    }
+    .note{ color:var(--muted); font-size:.95rem; }
+
+    /* Print styles: fits nicely on A5 landscape or scales on A4 */
+    @media print{
+      @page{ size: A5 landscape; margin: 10mm; }
+      body{ background:#fff; }
+      .confetti{ display:none; }
+      .invite{ box-shadow:none; }
+      .btn{ display:none; }
+    }
+
+    /* Small screens */
+    @media (max-width:620px){
+      .details{ grid-template-columns: 1fr; }
+      footer{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body class="theme-blush">
+  <main class="invite" role="article" aria-label="Birthday Invitation">
+    <!-- Decorative confetti (lightweight) -->
+    <div class="confetti" aria-hidden="true"></div>
+
+    <div class="content">
+      <header>
+        <span class="tag" aria-label="Party type">Birthday Party</span>
+      </header>
+
+      <section class="details">
+        <div>
+          <h1>Come Celebrate <span style="white-space:nowrap;">Maneasha’s 18th!</span></h1>
+          <p class="sub">We’re throwing a sweet celebration — and you’re on the VIP list.</p>
+
+          <div class="card whenwhere" aria-label="When and where">
+            <div>
+              <h2>When</h2>
+              <div class="row"><span class="dot" aria-hidden="true"></span> <div>
+                <div class="big">Saturday, 21 Septmber 2025</div>
+                <div>5:00- 11:00 PM</div>
+              </div></div>
+            </div>
+            <div>
+              <h2>Where</h2>
+              <div class="row"><span class="dot" aria-hidden="true"></span> <div>
+                <div class="big">Google Map</div>
+                <div>77E, The Bay Rd Chroy Changvar,Phnom Penh, Cambodia</div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" aria-label="Extras">
+          <h2>Dress & Gifts</h2>
+          <p><strong>Dress code:</strong> Formal 🌸</p>
+          <p><strong>Color Code:</strong>Black⬛, White⬜, Red🟥</p>
+          <p><strong>Gifts optional:</strong> Your presence is the present! 🎁😉</p>
+          <p class="note">Parking on site · Family friendly · Allergies? Let us know.</p>
+        </div>
+      </section>
+
+      <footer>
+        <div class="rsvp">
+          <a class="btn" href="#" aria-label="RSVP link">RSVP</a>
+          <span class="note">Please RSVP by <strong>19 Septmber</strong>.</span>
+        </div>
+        <div class="note">Contact: <a href="tell:015588878">015588878</a> · <a href="DM:Maneasha Soung">Maneasha Soung</a></div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Generate lightweight confetti pieces with varied timing
+    const confetti = document.querySelector('.confetti');
+    const pieces = 36; // adjust for more/less confetti
+    for (let i=0; i<pieces; i++){
+      const s = document.createElement('span');
+      const left = Math.random()*100; // vw
+      const delay = Math.random()*6;  // s
+      const dur = 4 + Math.random()*6; // s
+      const rot = (Math.random()*.8 + .2) * (Math.random()<.5?-1:1);
+      s.style.left = left + 'vw';
+      s.style.animationDelay = delay+'s';
+      s.style.animationDuration = dur+'s';
+      s.style.transform = `translateY(-120%) rotate(${rot}turn)`;
+      confetti.appendChild(s);
+    }
+
+    // Utility: quickly customize via query params, e.g. ?name=Sam&age=9
+    const params = new URLSearchParams(location.search);
+    const replacements = {
+      name: params.get('name'),
+      age: params.get('age'),
+      date: params.get('date'),
+      time: params.get('time'),
+      venue: params.get('venue'),
+      address: params.get('address'),
+      rsvp: params.get('rsvp'),
+      theme: params.get('theme'), // 'sky' or 'blush' or remove for default
+      type: params.get('type'),   // e.g. "Birthday Party", "BBQ & Games"
+      deadline: params.get('deadline')
+    };
+
+    function setText(selector, text){ if(!text) return; const el = document.querySelector(selector); if(el) el.textContent = text; }
+
+    if (replacements.theme){
+      document.body.classList.remove('theme-sky','theme-blush');
+      document.body.classList.add(`theme-${replacements.theme}`);
+    }
+    setText('.tag', replacements.type);
+
+    if (replacements.name && replacements.age){
+      document.querySelector('h1').innerHTML = `Come Celebrate <span style="white-space:nowrap;">${replacements.name}’s ${replacements.age}th!</span>`;
+    } else if (replacements.name){
+      document.querySelector('h1').innerHTML = `Come Celebrate <span style="white-space:nowrap;">${replacements.name}’s Birthday!</span>`;
+    }
+
+    if (replacements.date || replacements.time){
+      const whenBig = document.querySelector('.whenwhere .big');
+      const small = document.querySelectorAll('.whenwhere div div:nth-child(2)');
+    }
+    setText('.whenwhere > div:first-child .big', replacements.date || document.querySelector('.whenwhere > div:first-child .big').textContent);
+    if (replacements.time){
+      const timeEl = document.querySelector('.whenwhere > div:first-child .row div div:nth-child(2)');
+      timeEl.textContent = replacements.time;
+    }
+    setText('.whenwhere > div:last-child .big', replacements.venue);
+    if (replacements.address){
+      const addrEl = document.querySelector('.whenwhere > div:last-child .row div div:nth-child(2)');
+      addrEl.textContent = replacements.address;
+    }
+    if (replacements.rsvp){
+      const link = document.querySelector('.btn');
+      link.href = replacements.rsvp;
+    }
+    if (replacements.deadline){
+      const span = document.querySelector('.rsvp .note strong');
+      span.textContent = replacements.deadline;
+    }
+  </script>
+</body>
+</html>
